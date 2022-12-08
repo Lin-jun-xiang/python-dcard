@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import time
+import logging
 
 class Api:
 
@@ -25,7 +25,7 @@ class Api:
                 print(f"...{i}")
 
             except Exception as e:
-                print(e, "Crawler finished! No more forum")
+                logging.error('Error at %s', 'No more forums', exc_info=e)
                 break
 
             i += 1
