@@ -22,15 +22,12 @@ class Api:
                 forum = self.driver.find_element(By.XPATH,
                                             f'//*[@id="__next"]/div[2]/div[2]/div/div/div/div/div/a[{i}]/div/div[3]')
                 popular_forums.append(forum.text)
+                print(f"...{i}")
 
             except Exception as e:
-                print("Crawler finished! No more forum")
+                print(e, "Crawler finished! No more forum")
                 break
-            
+
             i += 1
 
         return popular_forums
-
-
-api = Api()
-
