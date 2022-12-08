@@ -1,6 +1,5 @@
-data/Private/
 .vscode/
-driver/
+Dcard-Python/driver/
 
 
 .DS_Store
