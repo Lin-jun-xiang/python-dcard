@@ -8,7 +8,7 @@ def main():
     popular_forums = api.get_popular_forums()
     # write data to the json file
     export_json("popular_forums",
-                {"popular_forums": popular_forums})
+                popular_forums)
 
 
 def export_json(filename : str, file : dict) -> None:
