@@ -30,4 +30,6 @@ class Api:
 
             i += 1
 
+        self.driver.close()
+
         return popular_forums
