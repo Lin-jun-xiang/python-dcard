@@ -2,25 +2,29 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import logging
 import time
+import chromedriver_autoinstaller
+
 class Api:
     """The selenium selectors : https://selenium-python.readthedocs.io/locating-elements.html"""
 
-    host = "https://www.dcard.tw/"
+    HOST = "https://www.dcard.tw/"
 
     def __init__(self):
-        self.chromePath = "./driver/chromedriver_win32/chromedriver.exe"
-        self.driver = webdriver.Chrome(self.chromePath)
+        chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
+                                            # and if it doesn't exist, download it automatically,
+                                            # then add chromedriver to path
+
+        self.driver = webdriver.Chrome()
 
     def get_popular_forums(self, number_limit : int=400):
-        self.driver.get(Api.host + "forum/popular")
+        self.driver.get(Api.HOST + "forum/popular")
 
         self.driver.maximize_window()
 
-        # scroll to bottom of page
+        # Scroll to bottom of page
         scroll_to_bottom(self.driver)
-        
 
-        # check the max numbers of popular forums
+        # Check the max numbers of popular forums
         forum_tag = self.driver.find_element(By.XPATH,
                                          '//*[@id="__next"]/div[2]/div[2]/div/div/div/div/div')
         forum_list_nums = len(forum_tag.find_elements(By.TAG_NAME,
