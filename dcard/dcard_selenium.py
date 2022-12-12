@@ -10,13 +10,15 @@ class Api:
     HOST = "https://www.dcard.tw/"
 
     def __init__(self):
-        chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
-                                            # and if it doesn't exist, download it automatically,
-                                            # then add chromedriver to path
+        chromedriver_autoinstaller.install(path="./driver/")  # Check if the current version of chromedriver exists
+                                                            # and if it doesn't exist, download it automatically,
+                                                            # then add chromedriver to path
+                                                            # "C://Program File(x86)/Google/Chrome" should be exists
+        # If cannot find then specific the driver path
+        self.driver = webdriver.Chrome("./driver/chromedriver_win32/chromedriver.exe")
 
-        self.driver = webdriver.Chrome()
-
-    def get_popular_forums(self, number_limit : int=400):
+    def get_popular_forums(self, number_limit : int=400) -> list:
+        """熱門看板"""
         self.driver.get(Api.HOST + "forum/popular")
 
         self.driver.maximize_window()
@@ -37,7 +39,7 @@ class Api:
                 forum = self.driver.find_element(By.XPATH,
                                             f'//*[@id="__next"]/div[2]/div[2]/div/div/div/div/div/a[{i}]/div/div[3]')
                 popular_forums.append(forum.text)
-                print(f"...{i}")
+                print(f"Popular forum-{i}")
 
             except Exception as e:
                 logging.error('Error at %s', 'No more forums', exc_info=e)
@@ -49,8 +51,39 @@ class Api:
 
         return popular_forums
 
+    def get_sensity_forums(self, number_limit : int=400):
+        """精選看板"""
+        self.driver.get(Api.HOST + "forum/popular")
+
+        self.driver.maximize_window()
+        scroll_to_bottom(self.driver)
+
+        forum_tag = self.driver.find_element(By.XPATH,
+                                         '//*[@id="__next"]/div[2]/div[1]/div/div')
+        forum_list_nums = len(forum_tag.find_elements(By.TAG_NAME,
+                                                    "a"))
+
+        i = 1
+        sensity_forums = []
+        while i < number_limit or i > forum_list_nums:
+            try:
+                forum = self.driver.find_element(By.XPATH,
+                                            f'//*[@id="__next"]/div[2]/div[1]/div/div/a[{i}]/div/div[2]')
+                sensity_forums.append(forum.text)
+                print(f"Sensity forum-{i}")
+
+            except Exception as e:
+                logging.error('Error at %s', 'No more forums', exc_info=e)
+                break
+
+            i += 1
+
+        self.driver.close()
+
+        return sensity_forums
+
 def scroll_to_bottom(driver):
-    SCROLL_PAUSE_TIME = 0.7
+    SCROLL_PAUSE_TIME = 0.2
 
     # Get scroll height
     last_height = driver.execute_script("return document.body.scrollHeight")
