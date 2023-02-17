@@ -8,17 +8,19 @@ def export_json(filename : str, file : dict) -> None:
 def main():
     api = Api()
 
-    # get the popular forums from dcard
-    # popular_forums = api.get_popular_forums()
-    # get the sensity forums from dcard
+    popular_forums = api.get_popular_forums()
     sensity_forums = api.get_sensity_forums()
 
+    api.close()
+
     # write data to the json file
-    # export_json("popular_forums",
-    #             {"popular_forums" : popular_forums})
+    export_json("popular_forums",
+                {"popular_forums" : popular_forums})
 
     export_json("sensity_forums",
                 {"sensity_forums" : sensity_forums})
+
+    print("Writed...")
 
 if __name__ == "__main__":
     main()
