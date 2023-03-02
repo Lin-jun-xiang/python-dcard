@@ -1,4 +1,4 @@
-# Dcard-Python
+# Python-Dcard
 `Dcard API`, `Python`, `Selenium`
 
 ### Python Selenium with chromeDriver
