@@ -1,5 +1,5 @@
 # Python-Dcard
-`Dcard API`, `Python`, `Selenium`
+`Dcard`, `Python`, `Selenium`
 
 ### Python Selenium with chromeDriver
 
@@ -16,4 +16,4 @@ pip install -r requirements.txt
 > 3. Remember the .exe version should according to your chrome version (chrome://settings/help)
 > 4. Put the driver.exe in project folder - dcard/driver
 
-3. Start use the api in main.py
+3. Start use the scraper in main.py
